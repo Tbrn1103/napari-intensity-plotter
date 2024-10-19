@@ -7,7 +7,13 @@
 [![codecov](https://codecov.io/gh/Tbrn1103/napari-intensity-plotter/branch/main/graph/badge.svg)](https://codecov.io/gh/Tbrn1103/napari-intensity-plotter)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-intensity-plotter)](https://napari-hub.org/plugins/napari-intensity-plotter)
 
-A plugin for plotting intensity profiles with control features in napari.
+## Overview
+`napari-intensity-plotter` is a plugin for Napari that allows users to plot intensity profiles over selected areas in an image. It includes features for:
+- Adjusting the size of the region for intensity averaging.
+- Saving intensity profiles as CSV files.
+- Exporting plots as high-resolution PNG images.
+- Customizing plot appearance through an intuitive control interface.
+
 
 ----------------------------------
 

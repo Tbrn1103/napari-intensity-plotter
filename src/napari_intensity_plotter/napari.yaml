@@ -6,25 +6,14 @@ visibility: public
 categories: ["Annotation", "Segmentation", "Acquisition"]
 contributions:
   commands:
-    - id: napari-intensity-plotter.make_container_widget
-      python_name: napari_intensity_plotter:ImageThreshold
-      title: Make threshold Container widget
-    - id: napari-intensity-plotter.make_magic_widget
-      python_name: napari_intensity_plotter:threshold_magic_widget
-      title: Make threshold magic widget
-    - id: napari-intensity-plotter.make_function_widget
-      python_name: napari_intensity_plotter:threshold_autogenerate_widget
-      title: Make threshold function widget
-    - id: napari-intensity-plotter.make_qwidget
-      python_name: napari_intensity_plotter:ExampleQWidget
-      title: Make example QWidget
+    - id: napari-intensity-plotter.IntensityPlotWidget
+      python_name: napari_hello._widget:IntensityPlotWidget
+      title: Intensity Plot
+    - id: napari-intensity-plotter.IntensityPlotControlWidget
+      python_name: napari_hello._widget:IntensityPlotControlWidget
+      title: Intensity Plot Control
   widgets:
-    - command: napari-intensity-plotter.make_container_widget
-      display_name: Container Threshold
-    - command: napari-intensity-plotter.make_magic_widget
-      display_name: Magic Threshold
-    - command: napari-intensity-plotter.make_function_widget
-      autogenerate: true
-      display_name: Autogenerate Threshold
-    - command: napari-intensity-plotter.make_qwidget
-      display_name: Example QWidget
+    - command: napari-intensity-plotter.IntensityPlotWidget
+      display_name: Intensity Plot
+    - command: napari-intensity-plotter.IntensityPlotControlWidget
+      display_name: Intensity Plot Control
