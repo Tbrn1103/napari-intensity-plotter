@@ -39,6 +39,7 @@ testing = [
     "pytest-qt",  # https://pytest-qt.readthedocs.io/en/latest/
     "napari",
     "pyqt5",
+    "pyqtgraph",  # ここを追加
 ]
 
 [project.entry-points."napari.manifest"]
