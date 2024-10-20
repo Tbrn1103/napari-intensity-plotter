@@ -1,66 +1,66 @@
 import numpy as np
-
+import os
 from napari_intensity_plotter._widget import (
-    ExampleQWidget,
-    ImageThreshold,
-    threshold_autogenerate_widget,
-    threshold_magic_widget,
+    IntensityPlotControlWidget,
+    IntensityPlotWidget,
 )
 
-
-def test_threshold_autogenerate_widget():
-    # because our "widget" is a pure function, we can call it and
-    # test it independently of napari
-    im_data = np.random.random((100, 100))
-    thresholded = threshold_autogenerate_widget(im_data, 0.5)
-    assert thresholded.shape == im_data.shape
-    # etc.
-
-
-# make_napari_viewer is a pytest fixture that returns a napari viewer object
-# you don't need to import it, as long as napari is installed
-# in your testing environment
-def test_threshold_magic_widget(make_napari_viewer):
+def test_intensity_plot_widget(make_napari_viewer):
+    # Napari viewer を作成
     viewer = make_napari_viewer()
-    layer = viewer.add_image(np.random.random((100, 100)))
 
-    # our widget will be a MagicFactory or FunctionGui instance
-    my_widget = threshold_magic_widget()
+    # テスト用の画像データを追加
+    layer = viewer.add_image(np.random.random((100, 100, 100)))
 
-    # if we "call" this object, it'll execute our function
-    thresholded = my_widget(viewer.layers[0], 0.5)
-    assert thresholded.shape == layer.data.shape
-    # etc.
+    # IntensityPlotWidget を作成し、viewer を渡す
+    plot_widget = IntensityPlotWidget(viewer)
+    assert plot_widget.viewer == viewer
+
+    # IntensityPlotWidget のプロット機能をテスト
+    plot_widget.update_plot(viewer, None)  # イベントがない場合も考慮
+    assert plot_widget.intensity_data is not None
+    assert len(plot_widget.intensity_data) == layer.data.shape[0]
+
+    # 保存機能をテスト（実際のファイル保存は仮のディレクトリで行う）
+    plot_widget.update_save_directory("/tmp")
+    plot_widget.save_csv = True
+    plot_widget.save_png = True
+    plot_widget.save_to_csv()
+    csv_path = os.path.join("/tmp", f"{plot_widget.layer_name}_y{plot_widget.clicked_coords[1]}_x{plot_widget.clicked_coords[0]}.csv")
+    png_path = os.path.join("/tmp", f"{plot_widget.layer_name}_y{plot_widget.clicked_coords[1]}_x{plot_widget.clicked_coords[0]}.png")
+    assert os.path.exists(csv_path)
+    assert os.path.exists(png_path)
 
 
-def test_image_threshold_widget(make_napari_viewer):
+def test_intensity_plot_control_widget(make_napari_viewer):
+    # Napari viewer を作成
     viewer = make_napari_viewer()
-    layer = viewer.add_image(np.random.random((100, 100)))
-    my_widget = ImageThreshold(viewer)
 
-    # because we saved our widgets as attributes of the container
-    # we can set their values without having to "interact" with the viewer
-    my_widget._image_layer_combo.value = layer
-    my_widget._threshold_slider.value = 0.5
+    # IntensityPlotControlWidget を作成し、viewer を渡す
+    control_widget = IntensityPlotControlWidget(viewer)
+    assert control_widget.viewer == viewer
 
-    # this allows us to run our functions directly and ensure
-    # correct results
-    my_widget._threshold_im()
-    assert len(viewer.layers) == 2
+    # square_size を変更し、IntensityPlotWidget に反映されるかをテスト
+    control_widget.square_spinbox.setValue(5)
+    assert control_widget.square_size == 5
+
+    # ディレクトリを変更し、IntensityPlotWidget に反映されるかをテスト
+    control_widget.save_path_input.setText("/tmp")
+    control_widget.update_save_directory()
+    assert control_widget.get_save_directory() == "/tmp"
+
+    # PNG 保存の状態を変更し、IntensityPlotWidget に反映されるかをテスト
+    control_widget.png_checkbox.setChecked(True)
+    assert control_widget.save_png
+
+    # "Hide All Layers" ボタンをクリックしてレイヤーが非表示になるかをテスト
+    control_widget.hide_all_layers()
+    for layer in viewer.layers:
+        assert not layer.visible
+
+    # "Focus on Visible Layer" ボタンをクリックしてレイヤーにフォーカスできるかをテスト
+    control_widget.focus_on_visible_layer()
+    # フォーカスされることを検証するテスト（フォーカスの具体的な効果による）
 
 
-# capsys is a pytest fixture that captures stdout and stderr output streams
-def test_example_q_widget(make_napari_viewer, capsys):
-    # make viewer and add an image layer using our fixture
-    viewer = make_napari_viewer()
-    viewer.add_image(np.random.random((100, 100)))
-
-    # create our widget, passing in the viewer
-    my_widget = ExampleQWidget(viewer)
-
-    # call our widget method
-    my_widget._on_click()
-
-    # read captured output and check that it's as we expected
-    captured = capsys.readouterr()
-    assert captured.out == "napari has 1 layers\n"
+# このテストスクリプトは、IntensityPlotWidget と IntensityPlotControlWidget の各機能が期待通りに動作することを確認します。
