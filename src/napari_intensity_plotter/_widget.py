@@ -100,12 +100,12 @@ class IntensityPlotControlWidget(QWidget):
         layout.addLayout(hide_button_layout)
         
         # Focus on Visible Layer ボタンとショートカット表示
-        focus_button_layout = QHBoxLayout()
+        """         focus_button_layout = QHBoxLayout()
         focus_button = QPushButton("Auto Scale")
         focus_button.clicked.connect(self.focus_on_visible_layer)
         focus_button_layout.addWidget(focus_button)
         focus_button_layout.addWidget(QLabel("Ctrl+A"))
-        layout.addLayout(focus_button_layout)
+        layout.addLayout(focus_button_layout) """
         self.add_separator(layout)  # 区切り線を追加
         
     def add_separator(self, layout):
@@ -167,11 +167,11 @@ class IntensityPlotControlWidget(QWidget):
             if isinstance(widget.widget(), IntensityPlotWidget):
                 widget.widget().hide_all_layers()
 
-    def focus_on_visible_layer(self):
-        """表示中のレイヤーにフォーカスを当てる"""
+    """ def focus_on_visible_layer(self):
+        #表示中のレイヤーにフォーカスを当てる
         for widget in self.viewer.window._dock_widgets.values():
             if isinstance(widget.widget(), IntensityPlotWidget):
-                widget.widget().focus_on_visible_layer()
+                widget.widget().focus_on_visible_layer() """
                 
     def save_to_csv(self):
         """CSV/PNG保存を実行する"""
@@ -231,7 +231,7 @@ class IntensityPlotWidget(QWidget):
         self.viewer.bind_key('Ctrl+S', self.save_to_csv)
         # ショートカットキーに機能をバインド
         self.viewer.bind_key('Ctrl+D', self.hide_all_layers)
-        self.viewer.bind_key('Ctrl+A', self.focus_on_visible_layer)
+        #self.viewer.bind_key('Ctrl+A', self.focus_on_visible_layer)
         
     def update_square(self, new_size):
         """Squareのサイズを更新"""
@@ -392,8 +392,8 @@ class IntensityPlotWidget(QWidget):
         for layer in self.viewer.layers:
             layer.visible = False
 
-    def focus_on_visible_layer(self, event=None):
-        """表示中のレイヤーにフォーカスを当てる"""
+    """ def focus_on_visible_layer(self, event=None):
+        #表示中のレイヤーにフォーカスを当てる
         visible_image_layers = [layer for layer in self.viewer.layers if isinstance(
             layer, napari.layers.Image) and layer.visible]
         if len(visible_image_layers) > 1:
@@ -406,4 +406,4 @@ class IntensityPlotWidget(QWidget):
             scale_factor = min(
                 self.viewer.window.qt_viewer.canvas.size) / max(range[1:3])
             self.viewer.camera.zoom = scale_factor
-            self.viewer.layers.selection.active = visible_image_layer
+            self.viewer.layers.selection.active = visible_image_layer """
