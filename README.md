@@ -7,67 +7,75 @@
 [![codecov](https://codecov.io/gh/Tbrn1103/napari-intensity-plotter/branch/main/graph/badge.svg)](https://codecov.io/gh/Tbrn1103/napari-intensity-plotter)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-intensity-plotter)](https://napari-hub.org/plugins/napari-intensity-plotter)
 
-## Overview
-`napari-intensity-plotter` is a plugin for Napari that allows users to plot intensity profiles over selected areas in an image. It includes features for:
-- Adjusting the size of the region for intensity averaging.
-- Saving intensity profiles as CSV files.
-- Exporting plots as high-resolution PNG images.
-- Customizing plot appearance through an intuitive control interface.
+# napari-intensity-plotter
 
+**napari-intensity-plotter** is a plugin for **[napari](https://napari.org)** that provides tools to measure and plot intensity profiles in 2D time-series images.
 
-----------------------------------
+![Intensity Plot Widget](images/intensity_plot_widget_example.png)
 
-This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
+*Screenshot: Intensity profile of a region of interest in a 2D time-series image.*
 
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/cookiecutter-napari-plugin#getting-started
+## Features
 
-and review the napari docs for plugin developers:
-https://napari.org/stable/plugins/index.html
--->
+- **Intensity Plot Widget**: Allows you to select a region of interest in a 2D time-series image and plot the intensity profile over time.
+- **Intensity Plot Control Widget**: Lets you fine-tune plot parameters and save the results as CSV or PNG files.
 
 ## Installation
 
-You can install `napari-intensity-plotter` via [pip]:
+You can install `napari-intensity-plotter` via pip:
 
-    pip install napari-intensity-plotter
+```bash
+pip install napari-intensity-plotter
+```
 
+Alternatively, you can install it directly from the napari plugin interface.
 
+### Usage
 
-To install latest development version :
+1. **Load a 2D Time-Series Image**  
+   Load a 2D time-series image (e.g., fluorescence microscopy data) in napari.
 
-    pip install git+https://github.com/Tbrn1103/napari-intensity-plotter.git
+2. **Activate the Widgets**  
+   Open the `Intensity Plot Widget` and `Intensity Plot Control Widget` from the `Plugins` menu in napari.
 
+3. **Intensity Plot Widget**  
+   - Move your mouse over the image, or click on a specific location to plot the intensity profile of the selected region across slices (e.g., time).
+   - The region of interest (ROI) size can be adjusted using the square size setting in the control widget.
+
+4. **Intensity Plot Control Widget**  
+   - Configure the square size for the ROI (ensures that the region size remains odd).
+   - Set the directory to save plots and intensity data.
+   - Save the intensity profile as a `.csv` or `.png` file by clicking the corresponding buttons or using keyboard shortcuts (`Ctrl+S`).
+
+5. **Additional Controls**  
+   - Hide all layers using the `Hide All Layers` button or `Ctrl+D`.
+   - Use the rectangle to visualize the selected ROI.
+
+### Example Workflow
+
+**Step 1**: Load a 2D time-series image (e.g., `tif` or `nd2`) into napari. Ensure the layer is visible.
+
+**Step 2**: Open the `Intensity Plot Widget` to visualize intensity changes over time or slices for a specific ROI.
+
+**Step 3**: Use the `Intensity Plot Control Widget` to:
+- Adjust the square size for the ROI.
+- Specify a directory to save intensity data.
+- Enable saving in CSV or PNG formats.
+  
+**Step 4**: Save the plotted intensity data by clicking `Save to CSV/PNG` or pressing `Ctrl+S`.
+
+**Step 5**: Hide all layers if necessary using `Hide All Layers` or `Ctrl+D`.
 
 ## Contributing
 
-Contributions are very welcome. Tests can be run with [tox], please ensure
-the coverage at least stays the same before you submit a pull request.
+Contributions are welcome! If you encounter issues or have ideas for new features, please submit them via the [GitHub Issues](https://github.com/Tbrn1103/napari-intensity-plotter/issues).
+
+## Acknowledgements
+
+This plugin was developed using the **napari plugin cookiecutter template**, which greatly streamlined the creation of this tool. See the [cookiecutter-napari-plugin](https://github.com/napari/cookiecutter-napari-plugin) for more details.
+
+Special thanks to the napari community for their continuous support and resources.
 
 ## License
 
-Distributed under the terms of the [BSD-3] license,
-"napari-intensity-plotter" is free and open source software
-
-## Issues
-
-If you encounter any problems, please [file an issue] along with a detailed description.
-
-[napari]: https://github.com/napari/napari
-[Cookiecutter]: https://github.com/audreyr/cookiecutter
-[@napari]: https://github.com/napari
-[MIT]: http://opensource.org/licenses/MIT
-[BSD-3]: http://opensource.org/licenses/BSD-3-Clause
-[GNU GPL v3.0]: http://www.gnu.org/licenses/gpl-3.0.txt
-[GNU LGPL v3.0]: http://www.gnu.org/licenses/lgpl-3.0.txt
-[Apache Software License 2.0]: http://www.apache.org/licenses/LICENSE-2.0
-[Mozilla Public License 2.0]: https://www.mozilla.org/media/MPL/2.0/index.txt
-[cookiecutter-napari-plugin]: https://github.com/napari/cookiecutter-napari-plugin
-
-[file an issue]: https://github.com/Tbrn1103/napari-intensity-plotter/issues
-
-[napari]: https://github.com/napari/napari
-[tox]: https://tox.readthedocs.io/en/latest/
-[pip]: https://pypi.org/project/pip/
-[PyPI]: https://pypi.org/
+This project is licensed under the BSD 3-Clause License. See the [LICENSE](LICENSE) file for details.
